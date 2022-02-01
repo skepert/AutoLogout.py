@@ -12,16 +12,15 @@ exec 3>&1 1>>${LOG_FILE} 2>&1
 
 # Constants to modify:
 
-altTime=1200		# if screensaver settings not readable, how long to wait
+altTime=900		# if screensaver settings not readable
 pollEvery=60	# how often to run idle check in seconds, performance tweak here
-waitTime=900		# amount of time after alternate or screensaver timer to take action in seconds
+waitTime=300		# amount of time after alternate or screensaver timer to take action in seconds
 
 loggedInUser=`id -un`
 
-# Finding screensaver timing settings if possible
 ssplist=/Library/Managed\ Preferences/com.apple.screensaver.user.plist
 
-# Confirm screensaver plist file exists, or default to alternate timer
+# Confirm screensaver plist file exists, or default to alternate time
 if [ -e "$ssplist" ]; then
 	
 	# read screensaver start time from system plist
@@ -61,7 +60,7 @@ while sleep $pollEvery; do
 		cdate=`date`
 		echo "Restarting machine at $cdate"
 		wait 2
-		# shutdown -r now
+		shutdown -r now
   	else
 		# assume system is being used
 	fi
